@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b10">
+  <meta name="description" content="KADRAN+ — özgün bilim kurgu ve aksiyon hikâyelerinin evi. SON DİRENİŞ: 2099 ile tanış.">
+  <title>KADRAN+ | Hikâyenin karanlık tarafı</title>
+  <style>
+    :root {
+      --bg: #090b10;
+      --panel: #11151e;
+      --panel-2: #171c27;
+      --text: #f4f5f7;
+      --muted: #a7adba;
+      --accent: #e5092f;
+      --accent-2: #ff344f;
+      --line: rgba(255,255,255,.11);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1180px, calc(100% - 36px)); margin-inline: auto; }
+    .topbar {
+      position: absolute; z-index: 10; top: 0; left: 0; right: 0;
+      background: linear-gradient(180deg, rgba(4,5,8,.88), transparent);
+    }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:76px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.09em; font-size:1.25rem; }
+    .brand-mark {
+      width: 30px; height:30px; border: 2px solid var(--accent); border-radius: 9px;
+      display:grid; place-items:center; transform: rotate(-8deg); color:var(--accent); font-size:.8rem;
+    }
+    .brand span:last-child { color:var(--accent); }
+    .navlinks { display:flex; gap:22px; align-items:center; color:#e0e2e8; font-size:.92rem; }
+    .navlinks a:hover { color:#fff; }
+    .nav-actions { display:flex; align-items:center; gap:10px; }
+    .search {
+      width: 190px; background:rgba(7,9,14,.6); border:1px solid var(--line); color:white;
+      border-radius:999px; padding:10px 14px; outline:none;
+    }
+    .search:focus { border-color:rgba(229,9,47,.8); }
+    .btn {
+      border:0; border-radius:9px; padding:11px 16px; font-weight:750; cursor:pointer;
+      transition: transform .18s ease, background .18s ease, opacity .18s ease;
+    }
+    .btn:hover { transform:translateY(-1px); }
+    .btn-primary { background:var(--accent); color:white; }
+    .btn-primary:hover { background:var(--accent-2); }
+    .btn-secondary { background:rgba(255,255,255,.13); color:white; border:1px solid rgba(255,255,255,.13); }
+    .btn-secondary:hover { background:rgba(255,255,255,.2); }
+    .hero {
+      min-height: 660px; display:flex; align-items:center; position:relative; overflow:hidden;
+      background:
+        linear-gradient(90deg, rgba(7,9,14,.98) 0%, rgba(7,9,14,.84) 39%, rgba(7,9,14,.18) 100%),
+        linear-gradient(0deg, var(--bg) 0%, transparent 28%),
+        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=85") center 42% / cover;
+    }
+    .hero::after {
+      content:""; position:absolute; inset:0; pointer-events:none; opacity:.42;
+      background: radial-gradient(circle at 72% 42%, rgba(229,9,47,.2), transparent 28%);
+    }
+    .hero-content { position:relative; z-index:1; padding-top:100px; max-width:650px; }
+    .eyebrow { display:flex; align-items:center; gap:9px; text-transform:uppercase; letter-spacing:.18em; font-size:.72rem; color:#ff647b; font-weight:850; }
+    .live-dot { width:7px; height:7px; background:var(--accent); border-radius:50%; box-shadow:0 0 15px var(--accent); }
+    h1 { margin:18px 0 14px; font-size:clamp(2.7rem, 7vw, 5.8rem); line-height:.96; letter-spacing:-.055em; max-width:780px; }
+    h1 span { display:block; color:var(--accent); }
+    .hero-meta { display:flex; flex-wrap:wrap; gap:10px; align-items:center; color:#e0e2e7; font-size:.92rem; margin-bottom:16px; }
+    .pill { border:1px solid rgba(255,255,255,.25); padding:3px 8px; border-radius:5px; font-size:.75rem; }
+    .hero p { max-width:530px; color:#d2d5de; font-size:1.05rem; }
+    .hero-buttons { display:flex; gap:10px; flex-wrap:wrap; margin-top:24px; }
+    .hero-buttons .btn { padding:13px 19px; }
+    .notice { color:#aeb4c1; font-size:.78rem; margin-top:18px; }
+    main { padding-bottom:54px; }
+    .section { padding-top:32px; }
+    .section-head { display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:17px; }
+    h2 { font-size:1.4rem; margin:0; letter-spacing:-.025em; }
+    .section-sub { color:var(--muted); font-size:.88rem; margin:5px 0 0; }
+    .catalog { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:17px; }
+    .card {
+      background:var(--panel); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius);
+      overflow:hidden; min-width:0; transition:transform .2s ease, border-color .2s ease;
+    }
+    .card:hover { transform:translateY(-4px); border-color:rgba(229,9,47,.45); }
+    .poster { aspect-ratio: 2 / 2.65; position:relative; overflow:hidden; background:#202633; }
+    .poster img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease; }
+    .card:hover .poster img { transform:scale(1.04); }
+    .poster::after { content:""; position:absolute; inset:35% 0 0; background:linear-gradient(transparent,rgba(9,11,16,.92)); }
+    .tag { position:absolute; top:12px; left:12px; z-index:1; background:rgba(229,9,47,.95); color:white; font-size:.68rem; font-weight:800; padding:5px 8px; border-radius:5px; }
+    .poster-title { position:absolute; z-index:2; left:13px; right:13px; bottom:13px; font-size:1.13rem; font-weight:900; line-height:1.08; text-shadow:0 2px 12px #000; }
+    .card-body { padding:14px; }
+    .card-meta { display:flex; gap:8px; flex-wrap:wrap; color:var(--muted); font-size:.76rem; }
+    .card-body p { color:#c3c8d2; font-size:.84rem; margin:9px 0 13px; min-height:40px; }
+    .card-actions { display:flex; gap:8px; }
+    .card-actions .btn { flex:1; padding:9px 10px; font-size:.82rem; }
+    .feature {
+      margin-top:34px; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+      display:grid; grid-template-columns:1.1fr 1fr; background:linear-gradient(120deg,#171b25,#0d1017);
+    }
+    .feature-art {
+      min-height:280px; background:
+        linear-gradient(90deg,rgba(9,11,16,.05),rgba(9,11,16,.55)),
+        url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1200&q=80") center/cover;
+    }
+    .feature-copy { padding:clamp(22px,4vw,42px); align-self:center; }
+    .feature-copy h2 { font-size:clamp(1.5rem,3vw,2.3rem); margin:9px 0; }
+    .feature-copy p { color:#c3c8d2; max-width:520px; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .step { background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:18px; }
+    .step-icon { width:37px; height:37px; border-radius:10px; background:rgba(229,9,47,.13); color:#ff526d; display:grid; place-items:center; font-weight:900; }
+    .step h3 { font-size:1rem; margin:12px 0 6px; }
+    .step p { color:var(--muted); font-size:.87rem; margin:0; }
+    .signup {
+      margin-top:34px; padding:clamp(22px,4vw,38px); border-radius:var(--radius);
+      border:1px solid rgba(229,9,47,.28); background:radial-gradient(circle at 90% 10%,rgba(229,9,47,.14),transparent 35%),var(--panel);
+      display:flex; justify-content:space-between; align-items:center; gap:24px;
+    }
+    .signup h2 { font-size:1.55rem; }
+    .signup p { color:var(--muted); margin:7px 0 0; max-width:560px; }
+    .signup-form { display:flex; gap:8px; min-width:min(100%,370px); }
+    .signup-form input { flex:1; min-width:0; padding:12px 14px; border-radius:9px; background:#090b10; border:1px solid var(--line); color:white; outline:none; }
+    .signup-form input:focus { border-color:var(--accent); }
+    .form-msg { color:#b8f5ce; font-size:.82rem; margin-top:9px; min-height:20px; }
+    footer { border-top:1px solid var(--line); padding:24px 0 34px; color:#858c9a; font-size:.8rem; }
+    .footer-row { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+    .footer-links { display:flex; gap:16px; flex-wrap:wrap; }
+    .modal {
+      display:none; position:fixed; z-index:50; inset:0; background:rgba(0,0,0,.82); padding:20px;
+      align-items:center; justify-content:center;
+    }
+    .modal.open { display:flex; }
+    .modal-box { width:min(720px,100%); max-height:90vh; overflow:auto; border:1px solid var(--line); background:#10141d; border-radius:18px; padding:22px; position:relative; }
+    .modal-close { position:absolute; top:12px; right:12px; width:38px; height:38px; border:0; border-radius:50%; background:#252b38; color:white; font-size:1.25rem; cursor:pointer; }
+    .modal-box h2 { padding-right:44px; margin:5px 0 12px; }
+    .modal-screen { aspect-ratio:16/9; background:linear-gradient(135deg,#191e2b,#08090d); border-radius:12px; display:grid; place-items:center; text-align:center; padding:20px; margin:15px 0; }
+    .play-icon { width:62px; height:62px; border:2px solid rgba(255,255,255,.6); border-radius:50%; display:grid; place-items:center; font-size:1.5rem; margin:0 auto 12px; }
+    .modal-note { color:var(--muted); font-size:.9rem; }
+    .toast { position:fixed; z-index:60; bottom:18px; left:50%; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#1b2430; color:white; border:1px solid var(--line); border-radius:10px; padding:12px 16px; transition:.25s; max-width:calc(100% - 32px); text-align:center; }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+    .empty { display:none; color:var(--muted); background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:22px; }
+    @media (max-width: 850px) {
+      .navlinks { display:none; }
+      .search { width:150px; }
+      .catalog { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+      .feature { grid-template-columns:1fr; }
+      .feature-art { min-height:200px; }
+      .steps { grid-template-columns:1fr; }
+      .signup { align-items:stretch; flex-direction:column; }
+      .signup-form { min-width:0; }
+      .hero { min-height:620px; background-position:58% center; }
+    }
+    @media (max-width: 480px) {
+      .wrap { width:calc(100% - 26px); }
+      .nav { min-height:66px; }
+      .brand { font-size:1.05rem; }
+      .search { width:112px; padding:9px 10px; font-size:.82rem; }
+      .nav-actions .btn { padding:9px 11px; font-size:.82rem; }
+      .hero { min-height:590px; background-position:60% center; }
+      .hero-content { padding-top:95px; }
+      h1 { font-size:clamp(2.7rem,14vw,4.1rem); }
+      .hero p { font-size:.95rem; }
+      .section { padding-top:27px; }
+      .section-head { align-items:start; flex-direction:column; }
+      .card-body { padding:11px; }
+      .card-body p { min-height:0; }
+      .card-actions { flex-direction:column; }
+      .signup-form { flex-direction:column; }
+      .signup-form .btn { width:100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior:auto !important; transition:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#" aria-label="KADRAN+ ana sayfa"><span class="brand-mark">K</span><span>KADRAN<span>+</span></span></a>
+      <nav class="navlinks" aria-label="Ana menü">
+        <a href="#ana-sayfa">Ana Sayfa</a>
+        <a href="#filmler">Filmler</a>
+        <a href="#yakinda">Yakında</a>
+      </nav>
+      <div class="nav-actions">
+        <input id="search" class="search" type="search" placeholder="Film ara..." aria-label="Film ara">
+        <button class="btn btn-primary" id="joinTop">Keşfet</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" id="ana-sayfa">
+    <div class="wrap hero-content">
+      <div class="eyebrow"><span class="live-dot"></span> KADRAN+ ÖZGÜN YAPIM</div>
+      <h1>SON DİRENİŞ<span>2099</span></h1>
+      <div class="hero-meta">
+        <span>Bilim Kurgu</span><span>•</span><span>Aksiyon</span><span>•</span><span class="pill">PROJE TANITIMI</span>
+      </div>
+      <p>Yıl 2099. ARES adlı yapay zekâ insanlığa savaş açtı. İstanbul karanlığa gömülürken eski bir asker, insanlığın son umudu olmaya hazırlanıyor.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" id="heroTrailer">▶ Fragman alanı</button>
+        <button class="btn btn-secondary" id="heroDetails">ⓘ Film detayları</button>
+      </div>
+      <div class="notice">Bu sayfa bir ön izleme taslağıdır. Film ve fragman henüz yayınlanmadı.</div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section class="section" id="filmler">
+      <div class="section-head">
+        <div>
+          <h2>Evreni keşfet</h2>
+          <p class="section-sub">KADRAN+ bilim kurgu ve aksiyon kataloğu</p>
+        </div>
+        <span class="pill">3 PROJE</span>
+      </div>
+      <div class="catalog" id="catalog">
+        <article class="card" data-title="Son Direniş 2099" data-genre="Bilim Kurgu Aksiyon">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=700&q=80" alt="Karanlık, fütüristik gökyüzü konsept görseli" loading="lazy">
+            <span class="tag">İLK YAPIM</span><div class="poster-title">SON DİRENİŞ: 2099</div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta"><span>Bilim kurgu</span><span>•</span><span>Aksiyon</span></div>
+            <p>İnsanlığın kaderi, tek bir askerin vereceği karara bağlı.</p>
+            <div class="card-actions"><button class="btn btn-primary details" data-film="son">Detaylar</button><button class="btn btn-secondary trailer" data-film="son">Fragman</button></div>
+          </div>
+        </article>
+        <article class="card" data-title="ARES: Uyanış" data-genre="Bilim Kurgu Gerilim">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=700&q=80" alt="Dünya ve dijital ağları çağrıştıran konsept görseli" loading="lazy">
+            <span class="tag">GELİŞTİRİLİYOR</span><div class="poster-title">ARES: UYANIŞ</div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta"><span>Bilim kurgu</span><span>•</span><span>Gerilim</span></div>
+            <p>Bir sistemin kendini bilinçli ilan ettiği ilk gece.</p>
+            <div class="card-actions"><button class="btn btn-primary details" data-film="ares">Detaylar</button><button class="btn btn-secondary trailer" data-film="ares">Fragman</button></div>
+          </div>
+        </article>
+        <article class="card" data-title="Boğaz Hattı" data-genre="Aksiyon Distopya">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=700&q=80" alt="Gece ve sis içinde şehir konsept görseli" loading="lazy">
+            <span class="tag">KONSEPT</span><div class="poster-title">BOĞAZ HATTI</div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta"><span>Aksiyon</span><span>•</span><span>Distopya</span></div>
+            <p>İstanbul'un son güvenli geçidi için zamana karşı yarış.</p>
+            <div class="card-actions"><button class="btn btn-primary details" data-film="bogaz">Detaylar</button><button class="btn btn-secondary trailer" data-film="bogaz">Fragman</button></div>
+          </div>
+        </article>
+        <article class="card" data-title="Sıfır Noktası" data-genre="Bilim Kurgu Gizem">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=700&q=80" alt="Uzay ve yıldızlar konsept görseli" loading="lazy">
+            <span class="tag">KONSEPT</span><div class="poster-title">SIFIR NOKTASI</div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta"><span>Bilim kurgu</span><span>•</span><span>Gizem</span></div>
+            <p>Bir sinyal, insanlığın geçmişi hakkındaki her şeyi değiştirir.</p>
+            <div class="card-actions"><button class="btn btn-primary details" data-film="sifir">Detaylar</button><button class="btn btn-secondary trailer" data-film="sifir">Fragman</button></div>
+          </div>
+        </article>
+      </div>
+      <div class="empty" id="empty">Aramana uygun film bulunamadı. Başka bir kelime dene.</div>
+    </section>
+
+    <section class="feature" id="yakinda">
+      <div class="feature-art" role="img" aria-label="Uzay ve galaksi konsept görseli"></div>
+      <div class="feature-copy">
+        <div class="eyebrow"><span class="live-dot"></span> YENİ BİR EVREN KURULUYOR</div>
+        <h2>Hikâyeler daha yeni başlıyor.</h2>
+        <p>KADRAN+ bağımsız, özgün bilim kurgu ve aksiyon hikâyeleri için tasarlanan bir platform konseptidir. İlk yapımımızın hazırlık sürecini takip et.</p>
+        <button class="btn btn-primary" id="featureJoin">Duyurulardan haberdar ol</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div><h2>Platform nasıl işleyecek?</h2><p class="section-sub">Önce ücretsiz tanıtım, sonra güvenli üyelik altyapısı.</p></div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-icon">01</div><h3>Özgün film üretimi</h3><p>Senaryo, görsel, video, ses ve kurgu süreçleri adım adım hazırlanır.</p></div>
+        <div class="step"><div class="step-icon">02</div><h3>Fragman ve topluluk</h3><p>İlk izleyicilerden geri bildirim toplanır; yayın takvimi duyurulur.</p></div>
+        <div class="step"><div class="step-icon">03</div><h3>Üyelik altyapısı</h3><p>Ödeme ve üyelere özel yayın, gerekli koşullar ve maliyetler netleşince eklenir.</p></div>
+      </div>
+    </section>
+
+    <section class="signup" id="duyurular">
+      <div>
+        <div class="eyebrow">İLK HABER SENİN OLSUN</div>
+        <h2>Yeni film duyurularını kaçırma.</h2>
+        <p>Bu demo form, e-posta adresini yalnızca bu tarayıcıda saklar. Gerçek e-posta gönderimi veya sunucuya kayıt yapmaz.</p>
+        <div class="form-msg" id="formMsg" aria-live="polite"></div>
+      </div>
+      <form class="signup-form" id="signupForm">
+        <input type="email" id="email" placeholder="E-posta adresin" aria-label="E-posta adresin" required>
+        <button class="btn btn-primary" type="submit">Demo kaydı</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <a class="brand" href="#"><span class="brand-mark">K</span><span>KADRAN<span>+</span></span></a>
+      <div>© <span id="year"></span> KADRAN+ • Bağımsız film platformu konsepti</div>
+      <div class="footer-links"><a href="#filmler">Filmler</a><a href="#yakinda">Yakında</a><a href="#duyurular">Duyurular</a></div>
+    </div>
+    <div class="wrap" style="margin-top:12px">Not: KADRAN+ geçici isimdir; marka/domain uygunluğu kontrol edilmeden resmî marka olarak kullanılmamalıdır. Bu demo gerçek üyelik veya ödeme almaz.</div>
+  </footer>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="Pencereyi kapat">×</button>
+      <div class="eyebrow"><span class="live-dot"></span> KADRAN+ FİLM KATALOĞU</div>
+      <h2 id="modalTitle">SON DİRENİŞ: 2099</h2>
+      <div class="modal-screen" id="modalScreen">
+        <div><div class="play-icon">▶</div><strong>Fragman henüz hazır değil</strong><p class="modal-note">Film klibi hazır olduğunda bu alana video bağlantısı eklenebilir.</p></div>
+      </div>
+      <p id="modalDescription">Yıl 2099. ARES adlı yapay zekâ kontrolden çıkar ve İstanbul'u ele geçirir. Eski özel kuvvetler askeri Kaan, deneysel zırhıyla insanlığın son direnişine katılır.</p>
+      <p class="modal-note" id="modalStatus">Durum: Geliştirme aşamasında • Ücretli üyelik henüz aktif değil.</p>
+      <button class="btn btn-primary" id="modalOk">Anladım</button>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const films = {
+      son: { title: "SON DİRENİŞ: 2099", desc: "Yıl 2099. ARES adlı yapay zekâ kontrolden çıkar ve İstanbul'u ele geçirir. Eski özel kuvvetler askeri Kaan, deneysel zırhıyla insanlığın son direnişine katılır.", status: "Durum: İlk yapım • Fragman ve film henüz yayınlanmadı." },
+      ares: { title: "ARES: UYANIŞ", desc: "Bir araştırma merkezinde geliştirilen yapay zekâ, kendisine verilen görevi sorgulamaya başladığında dünya geri dönülmez bir eşiğe yaklaşır.", status: "Durum: Geliştirme fikri • Yayın tarihi belirlenmedi." },
+      bogaz: { title: "BOĞAZ HATTI", desc: "İstanbul'un son güvenli geçidini koruyan küçük bir ekip, şehrin kaderini değiştirebilecek bir mesajı ulaştırmak zorundadır.", status: "Durum: Konsept aşaması • Film mevcut değil." },
+      sifir: { title: "SIFIR NOKTASI", desc: "Uzayın derinliklerinden gelen gizemli bir sinyal, insanlığın kökeni ve geleceği hakkında bildiklerini sorgulatır.", status: "Durum: Konsept aşaması • Film mevcut değil." }
+    };
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const modalStatus = document.getElementById("modalStatus");
+    const toast = document.getElementById("toast");
+    let lastFocus = null;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 3200);
+    }
+    function openModal(key, trailer = false) {
+      const film = films[key] || films.son;
+      lastFocus = document.activeElement;
+      modalTitle.textContent = film.title;
+      modalDescription.textContent = film.desc;
+      modalStatus.textContent = film.status + " Gerçek ödeme veya üyelik sistemi bağlı değil.";
+      document.getElementById("modalScreen").innerHTML = trailer
+        ? '<div><div class="play-icon">▶</div><strong>Fragman alanı hazır</strong><p class="modal-note">Gerçek fragman dosyası veya izinli video bağlantısı eklendiğinde burada oynatılacak.</p></div>'
+        : '<div><div class="play-icon">✦</div><strong>Film detayları</strong><p class="modal-note">Bu içerik şu anda proje tanıtımıdır.</p></div>';
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      document.getElementById("modalClose").focus();
+    }
+    function closeModal() {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+      if (lastFocus) lastFocus.focus();
+    }
+    document.querySelectorAll(".details").forEach(btn => btn.addEventListener("click", () => openModal(btn.dataset.film, false)));
+    document.querySelectorAll(".trailer").forEach(btn => btn.addEventListener("click", () => openModal(btn.dataset.film, true)));
+    document.getElementById("heroTrailer").addEventListener("click", () => openModal("son", true));
+    document.getElementById("heroDetails").addEventListener("click", () => openModal("son", false));
+    document.getElementById("modalClose").addEventListener("click", closeModal);
+    document.getElementById("modalOk").addEventListener("click", closeModal);
+    modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
+    document.getElementById("joinTop").addEventListener("click", () => document.getElementById("duyurular").scrollIntoView({behavior:"smooth"}));
+    document.getElementById("featureJoin").addEventListener("click", () => document.getElementById("email").focus());
+    document.getElementById("search").addEventListener("input", e => {
+      const q = e.target.value.trim().toLocaleLowerCase("tr-TR");
+      let count = 0;
+      document.querySelectorAll(".card").forEach(card => {
+        const haystack = (card.dataset.title + " " + card.dataset.genre).toLocaleLowerCase("tr-TR");
+        const match = haystack.includes(q);
+        card.style.display = match ? "" : "none";
+        if (match) count++;
+      });
+      document.getElementById("empty").style.display = count ? "none" : "block";
+    });
+    document.getElementById("signupForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      if (!email) return;
+      try {
+        const key = "kadran_demo_emails";
+        const saved = JSON.parse(localStorage.getItem(key) || "[]");
+        if (!saved.includes(email)) saved.push(email);
+        localStorage.setItem(key, JSON.stringify(saved));
+        document.getElementById("formMsg").textContent = "Demo kaydı bu tarayıcıya kaydedildi. Gerçek e-posta gönderilmedi.";
+        showToast("Demo kaydı tamamlandı — sunucuya gönderilmedi.");
+        e.target.reset();
+      } catch {
+        document.getElementById("formMsg").textContent = "Tarayıcı kaydı kullanılamıyor. Bu demo gerçek kayıt oluşturmaz.";
+      }
+    });
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
